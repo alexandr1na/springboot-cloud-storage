@@ -14,7 +14,7 @@ import java.util.Base64;
 
 @Service
 public class EncryptionService {
-    private Logger logger = LoggerFactory.getLogger(EncryptionService.class);
+    // private Logger logger = LoggerFactory.getLogger(EncryptionService.class);
 
 
     public String generateSalt() {
@@ -34,7 +34,8 @@ public class EncryptionService {
             encryptedValue = cipher.doFinal(data.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
                 | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
-            logger.error(e.getMessage());
+            System.out.println(e.getMessage());
+            return null;
         }
 
         return Base64.getEncoder().encodeToString(encryptedValue);
@@ -50,7 +51,7 @@ public class EncryptionService {
             decryptedValue = cipher.doFinal(Base64.getDecoder().decode(data));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException
                 | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            logger.error(e.getMessage());
+            return null;
         }
 
         return new String(decryptedValue);
